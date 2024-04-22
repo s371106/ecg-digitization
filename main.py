@@ -23,8 +23,6 @@ from pathlib import Path
 #   -  ...
 # - venv (perhaps needed)
 
-
-
 project_directory = Path(__file__).parent
 data_file_names = os.listdir(os.path.join(project_directory, "data"))
 data_files_path = os.path.join(project_directory, "data")
@@ -44,7 +42,7 @@ for data_file_name in data_file_names:
     # Attempt to load image
     original_image = cv2.imread(file_path)
 
-    # Check if image was loaded successfully
+    # Check if image was loaded successfully 
     if original_image is None:
         print(f"Error: Unable to load image from path: {file_path}")
     else:
@@ -81,45 +79,6 @@ for data_file_name in data_file_names:
 
     # path = "D:\ACIT - Oslomet\9. Master Thesis\Stored_images"
     cv2.imwrite(os.path.join(folder_path, 'cropped.png'), ROI)
-
-    ### Rotating
-    img_before = cv2.imread(os.path.join(folder_path, 'cropped.png'))
-    img_before_copy = img_before.copy()
-    img_gray = cv2.cvtColor(img_before_copy, cv2.COLOR_BGR2GRAY)
-    img_edges = cv2.Canny(img_gray, 100, 100, apertureSize=3)
-    lines = cv2.HoughLinesP(img_edges, 5, math.pi / 180.0, 100, minLineLength=100, maxLineGap=5)
-
-    angles = []
-
-    for [[x1, y1, x2, y2]] in lines:
-        cv2.line(img_before_copy, (x1, y1), (x2, y2), (255, 0, 0), 1)
-        angle = math.degrees(math.atan2(y2 - y1, x2 - x1))
-        angles.append(angle)
-
-    median_angle = np.median(angles)
-
-    rotated = ndimage.rotate(img_before, median_angle, cval=255)
-    cv2.imwrite(os.path.join(folder_path, 'rotated.jpg'), rotated)
-
-    ### Erosion
-    img = cv2.imread(os.path.join(folder_path, 'rotated.jpg'), 0)
-
-    kernel = np.ones((2, 2), np.uint8)
-    img_erosion = cv2.erode(img, kernel, iterations=1)
-    cv2.imwrite(os.path.join(folder_path, 'erosion.jpg'), img_erosion)
-
-    ### Blurring
-    mask = cv2.imread(os.path.join(folder_path, 'erosion.jpg'), 0)
-
-    sliding_window_size_x = 9
-    sliding_window_size_y = 9
-
-    mean_filter_kernel = np.ones((sliding_window_size_x, sliding_window_size_y), np.float32) / (
-                sliding_window_size_x * sliding_window_size_y)
-    filtered_image = cv2.filter2D(mask, -1, mean_filter_kernel)
-
-    invert = cv2.bitwise_not(filtered_image)
-    cv2.imwrite(os.path.join(folder_path, 'filtered_image.png'), invert)
 
     ### Spliting the scan into six strips
     before_spliting = cv2.imread(os.path.join(folder_path, 'filtered_image.png'))
