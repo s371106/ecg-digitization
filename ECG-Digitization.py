@@ -28,7 +28,7 @@ import csv
 
 
 #import pandas as pd
-#df = pd.read_csv('test2.csv')
+#df = pd.read_csv('test.csv')
 #df
 
 #import pandas as pd
@@ -302,7 +302,7 @@ def create_csv(folder_path):
     for dd in datafile[1:]:
         df = pd.concat([df, pd.DataFrame(dd)], axis=1)
     
-    df.to_csv(os.path.join(folder_path,'test2.csv'))
+    df.to_csv(os.path.join(folder_path,'test.csv'))
     
         
 #     bigger_pic = []
@@ -711,7 +711,7 @@ for data_file_name in data_file_names:
 
     
 
-    with open(os.path.join(folder_path,'test2.csv'), 'r', newline='') as infile, open(os.path.join(folder_path,'output.csv'), 'w', newline='') as outfile:
+    with open(os.path.join(folder_path,'test.csv'), 'r', newline='') as infile, open(os.path.join(folder_path,'output.csv'), 'w', newline='') as outfile:
         reader = csv.reader(infile)
         writer = csv.writer(outfile)
 
