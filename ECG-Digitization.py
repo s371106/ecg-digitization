@@ -320,7 +320,15 @@ def create_csv(folder_path):
 #     newimg.save('result_image.png')
 
 
-
+def div(this_row, x_corr, y_corr):
+        
+            return [this_row[0], 
+                    float(this_row[1])/x_corr, float(this_row[2])/y_corr,
+                    float(this_row[3])/x_corr, float(this_row[4])/y_corr,
+                    float(this_row[5])/x_corr, float(this_row[6])/y_corr,
+                    float(this_row[7])/x_corr, float(this_row[8])/y_corr,
+                    float(this_row[9])/x_corr, float(this_row[10])/y_corr,
+                    float(this_row[11])/x_corr, float(this_row[12])/y_corr]
 
 
 
@@ -701,7 +709,7 @@ for data_file_name in data_file_names:
 
     ## Let's divide each x_val by 462.99 and y_value by 82.67
 
-    import csv
+    
 
     with open(os.path.join(folder_path,'test2.csv'), 'r', newline='') as infile, open(os.path.join(folder_path,'output.csv'), 'w', newline='') as outfile:
         reader = csv.reader(infile)
@@ -711,16 +719,8 @@ for data_file_name in data_file_names:
         header = rows[0]
         data = rows[1:]
 
-        def div(this_row):
         
-            return [this_row[0], 
-                    float(this_row[1])/x_corr, float(this_row[2])/y_corr,
-                    float(this_row[3])/x_corr, float(this_row[4])/y_corr,
-                    float(this_row[5])/x_corr, float(this_row[6])/y_corr,
-                    float(this_row[7])/x_corr, float(this_row[8])/y_corr,
-                    float(this_row[9])/x_corr, float(this_row[10])/y_corr,
-                    float(this_row[11])/x_corr, float(this_row[12])/y_corr]
-        new_data = [div(row) for row in data]
+        new_data = [div(row, x_corr, y_corr) for row in data]
 
         new_rows = [header] + new_data
         for row in new_rows:
