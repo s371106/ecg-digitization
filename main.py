@@ -137,3 +137,5 @@ for data_file_name in data_file_names:
     #         outcome_erosion = cv2.erode(outcome, kernel_loop, iterations=1)
     #         outcome_filtered = cv2.filter2D(outcome_erosion,-1,mean_filter_kernel_loop)
     #         strip=cv2.bitwise_not(outcome_filtered)
+
+    

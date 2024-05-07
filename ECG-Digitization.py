@@ -725,6 +725,28 @@ for data_file_name in data_file_names:
         new_rows = [header] + new_data
         for row in new_rows:
             writer.writerow(row)
+    
+    dataset = pd.read_csv(os.path.join(folder_path,'output.csv'),delimiter=",")
+    dataset = dataset.drop("Unnamed: 0", axis=1)
+    dataset = dataset.dropna(axis=1)
+    j = 0
+    for i in range(0, len(dataset.columns), 2):
+        x_col = dataset.iloc[:, i]
+        y_col = dataset.iloc[:, i + 1]
+        plt_figure = plt.figure()
+        plt.plot(x_col, y_col)
+        plt.savefig(os.path.join(folder_path,f"proof-pair-{j}"))
+        plt.close(plt_figure)
+        j += 1
+
+    plt_figure = plt.figure()
+    for i in range(0, len(dataset.columns), 2):
+        x_col = dataset.iloc[:, i]
+        y_col = dataset.iloc[:, i + 1]
+        plt.plot(x_col, y_col)
+    plt.savefig(os.path.join(folder_path,f"proof-pair-consolidated"))
+    plt.close(plt_figure)
+
 
 
 
